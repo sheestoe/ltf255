@@ -1,0 +1,4 @@
+Flask
+Gunicorn
+python-telegram-bot
+requests
