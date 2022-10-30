@@ -36,7 +36,7 @@ def respond():
     return 'ok'
 
 
-async def start(update: telegram.Update, context: ext.ContextTypes.DEFAULT_TYPE) -> None:
+async def start(update, context) -> None:
     """Sends a message with three inline buttons attached."""
     keyboard = [
         [
@@ -51,7 +51,7 @@ async def start(update: telegram.Update, context: ext.ContextTypes.DEFAULT_TYPE)
     await update.message.reply_text("Please choose:", reply_markup=reply_markup)
 
 
-async def button(update: telegram.Update, context: ext.ContextTypes.DEFAULT_TYPE) -> None:
+async def button(update, context) -> None:
     """Parses the CallbackQuery and updates the message text."""
     query = update.callback_query
 
@@ -62,7 +62,7 @@ async def button(update: telegram.Update, context: ext.ContextTypes.DEFAULT_TYPE
     await query.edit_message_text(text=f"Selected option: {query.data}")
 
 
-async def help_command(update: telegram.Update, context: ext.ContextTypes.DEFAULT_TYPE) -> None:
+async def help_command(update, context) -> None:
     """Displays info on how to use the bot."""
     await update.message.reply_text("Use /start to test this bot.")
 
