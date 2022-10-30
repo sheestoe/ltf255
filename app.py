@@ -1,7 +1,5 @@
 from flask import Flask, request
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, Bot
-from telegram.ext import Application, CallbackQueryHandler, CommandHandler, ContextTypes
-from telegram import __version__ as TG_VER
+import telegram
 import os
 from telebot.mastermind import get_response
 
@@ -37,22 +35,22 @@ def respond():
     return 'ok'
 
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def start(update: telegram.Update, context: telegram.ContextTypes.DEFAULT_TYPE) -> None:
     """Sends a message with three inline buttons attached."""
     keyboard = [
         [
-            InlineKeyboardButton("Option 1", callback_data="1"),
-            InlineKeyboardButton("Option 2", callback_data="2"),
+            telegram.InlineKeyboardButton("Option 1", callback_data="1"),
+            telegram.InlineKeyboardButton("Option 2", callback_data="2"),
         ],
-        [InlineKeyboardButton("Option 3", callback_data="3")],
+        [telegram.InlineKeyboardButton("Option 3", callback_data="3")],
     ]
 
-    reply_markup = InlineKeyboardMarkup(keyboard)
+    reply_markup = telegram.InlineKeyboardMarkup(keyboard)
 
     await update.message.reply_text("Please choose:", reply_markup=reply_markup)
 
 
-async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def button(update: telegram.Update, context: telegram.ContextTypes.DEFAULT_TYPE) -> None:
     """Parses the CallbackQuery and updates the message text."""
     query = update.callback_query
 
@@ -63,7 +61,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await query.edit_message_text(text=f"Selected option: {query.data}")
 
 
-async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def help_command(update: telegram.Update, context: telegram.ContextTypes.DEFAULT_TYPE) -> None:
     """Displays info on how to use the bot."""
     await update.message.reply_text("Use /start to test this bot.")
 
@@ -71,11 +69,11 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 def main() -> None:
     """Run the bot."""
     # Create the Application and pass it your bot's token.
-    application = Application.builder().token("TOKEN").build()
+    application = telegram.Application.builder().token("TOKEN").build()
 
-    application.add_handler(CommandHandler("start", start))
-    application.add_handler(CallbackQueryHandler(button))
-    application.add_handler(CommandHandler("help", help_command))
+    application.add_handler(telegram.CommandHandler("start", start))
+    application.add_handler(telegram.CallbackQueryHandler(button))
+    application.add_handler(telegram.CommandHandler("help", help_command))
 
     # Run the bot until the user presses Ctrl-C
     application.run_polling()
