@@ -48,5 +48,5 @@ def set_webhook():
 def index():
     return '.'
 
-if __name__ == '__main__':
-    app.run(threaded=True)
+#if __name__ == '__main__':
+#    app.run(threaded=True)
