@@ -1,6 +1,5 @@
 from flask import Flask, request
 import telegram
-import telegram.ext as ext
 import os
 from telebot.mastermind import get_response
 
@@ -32,52 +31,7 @@ def respond():
     # now just send the message back
     # notice how we specify the chat and the msg we reply to
     bot.sendMessage(chat_id=chat_id, text=response, reply_to_message_id=msg_id)
-    main()
     return 'ok'
-
-
-async def start(update, context) -> None:
-    """Sends a message with three inline buttons attached."""
-    keyboard = [
-        [
-            telegram.InlineKeyboardButton("Option 1", callback_data="1"),
-            telegram.InlineKeyboardButton("Option 2", callback_data="2"),
-        ],
-        [telegram.InlineKeyboardButton("Option 3", callback_data="3")],
-    ]
-
-    reply_markup = telegram.InlineKeyboardMarkup(keyboard)
-
-    await update.message.reply_text("Please choose:", reply_markup=reply_markup)
-
-
-async def button(update, context) -> None:
-    """Parses the CallbackQuery and updates the message text."""
-    query = update.callback_query
-
-    # CallbackQueries need to be answered, even if no notification to the user is needed
-    # Some clients may have trouble otherwise. See https://core.telegram.org/bots/api#callbackquery
-    await query.answer()
-
-    await query.edit_message_text(text=f"Selected option: {query.data}")
-
-
-async def help_command(update, context) -> None:
-    """Displays info on how to use the bot."""
-    await update.message.reply_text("Use /start to test this bot.")
-
-
-def main() -> None:
-    """Run the bot."""
-    # Create the Application and pass it your bot's token.
-    application = ext.Application.builder().token("TOKEN").build()
-
-    application.add_handler(ext.CommandHandler("start", start))
-    application.add_handler(ext.CallbackQueryHandler(button))
-    application.add_handler(ext.CommandHandler("help", help_command))
-
-    # Run the bot until the user presses Ctrl-C
-    application.run_polling()
 
 @app.route('/setwebhook', methods=['GET', 'POST'])
 def set_webhook():
