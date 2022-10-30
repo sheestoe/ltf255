@@ -5,8 +5,8 @@ from telebot.mastermind import get_response
 
 global bot
 global TOKEN
-TOKEN = print(os.environ['BOT_TOKEN'])
-URL = print(os.environ['URL'])
+TOKEN = os.environ['BOT_TOKEN']
+URL = os.environ['URL']
 bot = telegram.Bot(token=TOKEN)
 
 app = Flask(__name__)
