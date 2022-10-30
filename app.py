@@ -1,5 +1,6 @@
 from flask import Flask, request
 import telegram
+import telegram.ext as ext
 import os
 from telebot.mastermind import get_response
 
@@ -35,7 +36,7 @@ def respond():
     return 'ok'
 
 
-async def start(update: telegram.Update, context: telegram.ContextTypes.DEFAULT_TYPE) -> None:
+async def start(update: telegram.Update, context: ext.ContextTypes.DEFAULT_TYPE) -> None:
     """Sends a message with three inline buttons attached."""
     keyboard = [
         [
@@ -50,7 +51,7 @@ async def start(update: telegram.Update, context: telegram.ContextTypes.DEFAULT_
     await update.message.reply_text("Please choose:", reply_markup=reply_markup)
 
 
-async def button(update: telegram.Update, context: telegram.ContextTypes.DEFAULT_TYPE) -> None:
+async def button(update: telegram.Update, context: ext.ContextTypes.DEFAULT_TYPE) -> None:
     """Parses the CallbackQuery and updates the message text."""
     query = update.callback_query
 
@@ -61,7 +62,7 @@ async def button(update: telegram.Update, context: telegram.ContextTypes.DEFAULT
     await query.edit_message_text(text=f"Selected option: {query.data}")
 
 
-async def help_command(update: telegram.Update, context: telegram.ContextTypes.DEFAULT_TYPE) -> None:
+async def help_command(update: telegram.Update, context: ext.ContextTypes.DEFAULT_TYPE) -> None:
     """Displays info on how to use the bot."""
     await update.message.reply_text("Use /start to test this bot.")
 
@@ -69,11 +70,11 @@ async def help_command(update: telegram.Update, context: telegram.ContextTypes.D
 def main() -> None:
     """Run the bot."""
     # Create the Application and pass it your bot's token.
-    application = telegram.Application.builder().token("TOKEN").build()
+    application = ext.Application.builder().token("TOKEN").build()
 
-    application.add_handler(telegram.CommandHandler("start", start))
-    application.add_handler(telegram.CallbackQueryHandler(button))
-    application.add_handler(telegram.CommandHandler("help", help_command))
+    application.add_handler(ext.CommandHandler("start", start))
+    application.add_handler(ext.CallbackQueryHandler(button))
+    application.add_handler(ext.CommandHandler("help", help_command))
 
     # Run the bot until the user presses Ctrl-C
     application.run_polling()
