@@ -89,7 +89,7 @@ def set_webhook():
     print('after webhook')
     # something to let us know things work
     if s:
-        return "webhook setup ok"
+        return "webhook setup ok!"
     else:
         return "webhook setup failed"
 
