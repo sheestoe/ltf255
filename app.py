@@ -37,6 +37,7 @@ def respond():
 def set_webhook():
     # we use the bot object to link the bot to our app which live
     # in the link provided by URL
+    print('testing webhook')
     s = bot.setWebhook('{URL}{HOOK}'.format(URL=URL, HOOK=TOKEN))
     # something to let us know things work
     if s:
@@ -48,5 +49,5 @@ def set_webhook():
 def index():
     return '.'
 
-#if __name__ == '__main__':
-#    app.run(threaded=True)
+if __name__ == '__main__':
+   app.run(threaded=True)
