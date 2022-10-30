@@ -1,5 +1,7 @@
 from flask import Flask, request
-import telegram
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, Bot
+from telegram.ext import Application, CallbackQueryHandler, CommandHandler, ContextTypes
+from telegram import __version__ as TG_VER
 import os
 from telebot.mastermind import get_response
 
