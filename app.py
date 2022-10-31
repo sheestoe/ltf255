@@ -33,7 +33,7 @@ def respond():
 
     keyboard = [
     [
-        telegram.InlineKeyboardButton("" + x, callback_data="{}".format(x)) for x in range(1,6)  
+        telegram.InlineKeyboardButton("" + str(x), callback_data="{}".format(x)) for x in range(1,6)  
     ],
     [telegram.InlineKeyboardButton("Option 3", callback_data="3")],
     ]
