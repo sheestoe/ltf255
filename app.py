@@ -30,6 +30,18 @@ def respond():
     response = get_response(text)
     # now just send the message back
     # notice how we specify the chat and the msg we reply to
+
+    keyboard = [
+    [
+        telegram.InlineKeyboardButton("Option 1", callback_data="1"),
+        telegram.InlineKeyboardButton("Option 2", callback_data="2"),
+    ],
+    [telegram.InlineKeyboardButton("Option 3", callback_data="3")],
+    ]
+
+    reply_markup = telegram.InlineKeyboardMarkup(keyboard)
+
+    update.message.reply_text("Please choose:", reply_markup=reply_markup)
     bot.sendMessage(chat_id=chat_id, text=response, reply_to_message_id=msg_id)
     return 'ok'
 
