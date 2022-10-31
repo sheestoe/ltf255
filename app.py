@@ -16,7 +16,7 @@ app = Flask(__name__)
 #     return 'Hello, World!'
 
 @app.route('/{}'.format(TOKEN), methods=['POST'])
-async def respond():
+def respond():
     # retrieve the message in JSON and then transform it to Telegram object
     update = telegram.Update.de_json(request.get_json(force=True), bot)
     # get the chat_id to be able to respond to the same user
@@ -40,7 +40,7 @@ async def respond():
 
     reply_markup = telegram.InlineKeyboardMarkup(keyboard)
 
-    await update.message.reply_text("Please choose:", reply_markup=reply_markup)
+    update.message.reply_text("Please choose:", reply_markup=reply_markup)
     #bot.sendMessage(chat_id=chat_id, text=response, reply_to_message_id=msg_id)
     return 'ok'
 
