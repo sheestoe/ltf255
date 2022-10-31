@@ -59,8 +59,8 @@ def main() -> None:
     updater.dispatcher.add_handler(CommandHandler('help', help_command))
 
     # Start the Bot
-    updater.start_polling()
+    #updater.start_polling()
 
     # Run the bot until the user presses Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT
-    updater.idle()
+    #updater.idle()
