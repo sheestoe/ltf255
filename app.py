@@ -16,7 +16,7 @@ app = Flask(__name__)
 #     return 'Hello, World!'
 
 @app.route('/{}'.format(TOKEN), methods=['POST'])
-def respond():
+async def respond():
     # retrieve the message in JSON and then transform it to Telegram object
     update = telegram.Update.de_json(request.get_json(force=True), bot)
     # get the chat_id to be able to respond to the same user
@@ -33,16 +33,15 @@ def respond():
 
     keyboard = [
     [
-        telegram.InlineKeyboardButton("Option 1", callback_data="1"),
-        telegram.InlineKeyboardButton("Option 2", callback_data="2"),
+        telegram.InlineKeyboardButton("" + x, callback_data="{}".format(x)) for x in range(1,6)  
     ],
     [telegram.InlineKeyboardButton("Option 3", callback_data="3")],
     ]
 
     reply_markup = telegram.InlineKeyboardMarkup(keyboard)
 
-    update.message.reply_text("Please choose:", reply_markup=reply_markup)
-    bot.sendMessage(chat_id=chat_id, text=response, reply_to_message_id=msg_id)
+    await update.message.reply_text("Please choose:", reply_markup=reply_markup)
+    #bot.sendMessage(chat_id=chat_id, text=response, reply_to_message_id=msg_id)
     return 'ok'
 
 @app.route('/setwebhook', methods=['GET', 'POST'])
