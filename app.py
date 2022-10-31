@@ -35,12 +35,26 @@ def respond():
     [
         telegram.InlineKeyboardButton("" + str(x), callback_data="{}".format(x)) for x in range(1,6)  
     ],
-    [telegram.InlineKeyboardButton("Option 3", callback_data="3")],
-    ]
+    [
+        telegram.InlineKeyboardButton("" + str(x), callback_data="{}".format(x)) for x in range(6,11)
+    ],
+    [
+        telegram.InlineKeyboardButton("" + str(x), callback_data="{}".format(x)) for x in range(11,16)
+    ],
+    [
+        telegram.InlineKeyboardButton("" + str(x), callback_data="{}".format(x)) for x in range(16,21)
+    ],
+    [
+        telegram.InlineKeyboardButton("" + str(x), callback_data="{}".format(x)) for x in range(21,26)
+    ]]
 
     reply_markup = telegram.InlineKeyboardMarkup(keyboard)
 
     update.message.reply_text("Please choose:", reply_markup=reply_markup)
+    query = update.callback_query
+    query.answer()
+    query.edit_message_text(text=f"Selected option: {query.data}")
+
     #bot.sendMessage(chat_id=chat_id, text=response, reply_to_message_id=msg_id)
     return 'ok'
 
